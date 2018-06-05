@@ -1,16 +1,14 @@
 package com.company;
 
-import java.net.URISyntaxException;
+import com.google.gson.Gson;
 
 public class Main {
 
     public static void main(String[] args) {
-        TheMovieDbClient movieClient = new TheMovieDbClient();
-        String films = movieClient.GetFilms();
+        MoviesDataProvider movieDataProvider = new MoviesDataProvider();
+        Movie fightClub = movieDataProvider.FightClub();
 
-
-        System.out.println(films);
-
+        System.out.println(new Gson().toJson(fightClub));
     }
 }
 
