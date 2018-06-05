@@ -23,24 +23,32 @@ public class TheMovieDbClient{
         _client = HttpClientBuilder.create().build();
     }
 
-    public String GetFilms() throws URISyntaxException {
+    public String GetFilms() {
 
-        URI uri = new URIBuilder("http://api.themoviedb.org/3/movie/550")
-                .addParameter("api_key", apiKey).build();
-
+        URI uri = UrlWithApiKey("http://api.themoviedb.org/3/movie/550");
         HttpGet request = new HttpGet(uri);
 
         String responseString = null;
         try {
             HttpResponse response = _client.execute(request);
-
             HttpEntity entity = response.getEntity();
+
             responseString = EntityUtils.toString(entity, "UTF-8");
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         return responseString;
+    }
+
+    public URI UrlWithApiKey(String url){
+        try {
+            return new URIBuilder(url).addParameter("api_key", apiKey).build();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }
 
